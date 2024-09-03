@@ -1,18 +1,20 @@
 {
     "compilerOptions": {
+        "moduleDetection": "force",
         "target": "es6",
-        "module": "NodeNext",
+        "module": "Preserve",
         "outDir": "./dist",
         "rootDir": "./src",
         "strict": true,
         "esModuleInterop": true,
+        "resolveJsonModule": true,
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
-        "moduleResolution": "NodeNext",
+        "allowJs": true,
         "paths": {
             "@/*": [
                 "./src/*"
-            ]
+            ],
         }
     },
     "include": [
