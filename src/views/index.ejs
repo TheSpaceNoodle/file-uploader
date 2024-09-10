@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Uploader App</title>
+    <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+    <header>
+        <h1>Welcome to File Uploader App</h1>
+        <nav>
+            <ul>
+                <% if (!user) { %>
+                    <li><a href="/login">Login</a></li>
+                    <li><a href="/sign-up">Sign Up</a></li>
+                <% } else { %>
+                    <li><a href="/logout">Logout</a></li>
+                <% } %>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <% if (user) { %>
+            <h2>Hello, <%= user.username %>!</h2>
+            <h3>Your Folders:</h3>
+            <ul>
+                <% if (folders.length > 0) { %>
+                    <% folders.forEach(function(folder) { %>
+                        <li><a href="/folders/<%= folder.id %>"><%= folder.name %></a></li>
+                    <% }); %>
+                <% } else { %>
+                    <li>No folders found.</li>
+                <% } %>
+            </ul>
+        <% } else { %>
+            <p>Please <a href="/login">login</a> or <a href="/sign-up">sign up</a> to view your folders.</p>
+        <% } %>
+    </main>
+</body>
+</html>

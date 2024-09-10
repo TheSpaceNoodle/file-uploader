@@ -1,28 +1,34 @@
 import { User } from '@prisma/client';
 import prisma from '..';
-import bcrypt, { genSaltSync } from 'bcryptjs';
+import bcrypt from 'bcryptjs';
 
 class Users {
-  static async findById(id: string): Promise<User | null> {
-    return await prisma.user.findUnique({
+  static findById(id: string): Promise<User | null> {
+    return prisma.user.findUnique({
       where: {
         id,
       },
     });
   }
 
-  static async findByUsername(username: string): Promise<User | null> {
-    return await prisma.user.findUnique({
+  static findByUsername(username: string): Promise<User | null> {
+    return prisma.user.findUnique({
       where: {
         username,
       },
     });
   }
 
-  static async signUp(userData: User) {
-    const hash = bcrypt.hashSync(userData.password, genSaltSync());
+  static findByEmail(email: string): Promise<User | null> {
+    return prisma.user.findUnique({
+      where: { email },
+    });
+  }
 
-    return await prisma.user.create({
+  static signUp(userData: User): Promise<User> {
+    const hash = bcrypt.hashSync(userData.password, bcrypt.genSaltSync());
+
+    return prisma.user.create({
       data: {
         ...userData,
         password: hash,
