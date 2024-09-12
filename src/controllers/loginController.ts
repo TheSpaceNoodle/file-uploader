@@ -1,4 +1,4 @@
-import { Request, RequestHandler, Response } from 'express';
+import { NextFunction, Request, RequestHandler, Response } from 'express';
 import passport from 'passport';
 
 export const getLogin = (_: Request, res: Response) => {
@@ -12,3 +12,13 @@ export const postLogin = [
     res.redirect('/');
   },
 ];
+
+export const getLogout = (req: Request, res: Response, next: NextFunction) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+
+    res.redirect('/');
+  });
+};

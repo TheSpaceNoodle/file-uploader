@@ -1,4 +1,4 @@
-import { HOST } from '@/constants';
+import { HOST } from '../constants';
 import { spec } from 'pactum';
 import { test } from 'vitest';
 import { Response } from '@/prisma/models/Response.ts';

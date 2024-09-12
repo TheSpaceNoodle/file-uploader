@@ -5,15 +5,12 @@ export const postSignupValidator = {
     isEmail: true,
     custom: {
       options: async (value: string) => {
-        if (await Users.findByEmail(value)) {
-          return Promise.reject(new Error('This email is already in-use'));
-        }
+        const user = await Users.findByEmail(value);
 
-        return true;
+        if (user) {
+          throw new Error('This email is already in-use');
+        }
       },
-    },
-    normalizeEmail: {
-      options: { all_lowercase: true },
     },
   },
   username: {

@@ -1,11 +1,14 @@
 import express, { Application } from 'express';
 
-import 'dotenv/config';
-import '@/auth/passport.ts';
-import { sessionsMiddleware } from './prisma/sessionsMiddleware';
-import { loginRouter, indexRouter, signUpRouter } from './routes';
+import passport from 'passport';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { HOST } from './constants';
+import { sessionsMiddleware } from './prisma/sessionsMiddleware';
+import { indexRouter, loginRouter, signUpRouter } from './routes';
+
+import '@/auth/passport.ts';
+import 'dotenv/config';
 
 const app: Application = express();
 
@@ -19,11 +22,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use(sessionsMiddleware);
+app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/sign-up', signUpRouter);
 
 app.listen(process.env.PORT, () => {
-  console.log(`Server is running on: http://localhost:${process.env.PORT}`);
+  console.log(`Server is running on: ${HOST}`);
 });

@@ -1,5 +1,5 @@
 import { getSignup, postSignup } from '@/controllers/signupController';
-import { postSignupValidator } from '@/controllers/validators/signupValidators';
+import { postSignupValidator } from '@/validators/signupValidators';
 import { Router } from 'express';
 import { checkSchema } from 'express-validator';
 

@@ -3,7 +3,9 @@ import { Request, Response, Router } from 'express';
 const router = Router();
 
 router.get('/', (req: Request, res: Response) => {
-  res.render('index', { user: req.user });
+  const user = req.session.passport?.user;
+
+  res.render('index', { user, folders: user?.folders || [] });
 });
 
 export default router;

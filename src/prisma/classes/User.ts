@@ -8,6 +8,9 @@ class Users {
       where: {
         id,
       },
+      include: {
+        Folder: true,
+      },
     });
   }
 

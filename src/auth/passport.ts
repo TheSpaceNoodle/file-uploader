@@ -24,8 +24,11 @@ passport.use(
   }),
 );
 
-passport.serializeUser((userId, done) => {
-  done(null, userId);
+// Somehow even though Express.User type has the same fields as Prisma.User, it throws field mismatch error
+// Error can be ignored but I chose not to
+passport.serializeUser((user, done) => {
+  // Workaround I came out with
+  done(null, (user as User).id);
 });
 
 passport.deserializeUser(async (userId: string, done) => {
@@ -33,7 +36,7 @@ passport.deserializeUser(async (userId: string, done) => {
     const user: User | null = await Users.findById(userId);
 
     if (!user) {
-      throw new Error('No such user');
+      done('No such user', false);
     }
 
     return done(null, user);

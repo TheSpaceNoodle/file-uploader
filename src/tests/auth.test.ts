@@ -1,14 +1,18 @@
 import { test } from 'vitest';
 import { spec } from 'pactum';
 import { Prisma } from '@prisma/client';
-import { HOST } from '@/constants';
+import { HOST } from '../constants';
 
 test('login with wrong credentials', async () => {
-  await spec().post(`${HOST}/login`).withAuth('user', 'password').expectStatus(401);
+  await spec().post(`${HOST}/login`).withBody({ username: 'user', password: 'password' }).expectStatus(401);
 });
 
 test('login with right credentials', async () => {
-  await spec().post(`${HOST}/login`).withAuth('user', 'user').expectStatus(200);
+  await spec().post(`${HOST}/login`).withBody({ username: 'user', password: 'user' }).expectStatus(302);
+});
+
+test('log out', async () => {
+  await spec().get(`${HOST}/login/logout`).expectStatus(302);
 });
 
 test('sign up with already existing username & email', async () => {
