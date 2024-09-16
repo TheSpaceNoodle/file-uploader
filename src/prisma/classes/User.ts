@@ -1,9 +1,10 @@
 import { User } from '@prisma/client';
 import prisma from '..';
 import bcrypt from 'bcryptjs';
+import { UserWithFolders } from '../models';
 
 class Users {
-  static findById(id: string): Promise<User | null> {
+  static findById(id: string): Promise<UserWithFolders | null> {
     return prisma.user.findUnique({
       where: {
         id,

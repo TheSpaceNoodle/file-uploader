@@ -15,6 +15,7 @@
                     <li><a href="/login">Login</a></li>
                     <li><a href="/sign-up">Sign Up</a></li>
                 <% } else { %>
+                    <li><a href="/folders/create">Create new folder</a></li>
                     <li><a href="/login/logout">Logout</a></li>
                 <% } %>
             </ul>
@@ -22,7 +23,7 @@
     </header>
     <main>
         <% if (user) { %>
-            <h2>Hello, <%= user.username %>!</h2>
+            <h2>Hello, <%= user.full_name %>!</h2>
             <h3>Your Folders:</h3>
             <ul>
                 <% if (folders.length > 0) { %>

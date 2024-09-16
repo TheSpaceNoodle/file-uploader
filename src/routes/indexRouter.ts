@@ -1,11 +1,14 @@
+import UserWithFolders from '@/prisma/models/UserWithFolders';
 import { Request, Response, Router } from 'express';
 
 const router = Router();
 
 router.get('/', (req: Request, res: Response) => {
-  const user = req.session.passport?.user;
+  const user = req.user as UserWithFolders;
 
-  res.render('index', { user, folders: user?.folders || [] });
+  console.log(user.Folder);
+
+  res.render('index', { user, folders: user?.Folder });
 });
 
 export default router;
