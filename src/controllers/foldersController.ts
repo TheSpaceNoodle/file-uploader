@@ -3,12 +3,12 @@ import { isFolderOwner } from '@/utils';
 import { User } from '@prisma/client';
 import { NextFunction, Request, Response } from 'express';
 
-export const getUserFolders = async (req: Request) => {
+export const getUserFolders = async (req: Request, res: Response) => {
   const user = req.user as User;
 
   const folders = await Folders.getUserFolders(user.id);
 
-  return folders;
+  res.status(200).send(folders);
 };
 
 export const getCreateFolder = (_: Request, res: Response) => {

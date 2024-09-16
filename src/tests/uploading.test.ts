@@ -3,24 +3,23 @@ import { spec } from 'pactum';
 import { test } from 'vitest';
 import { Folder } from '@prisma/client';
 
+import 'dotenv/config';
+
 test('fetching folders', async () => {
-  await spec()
+  const folders = (await spec()
     .get(`${HOST}/folders`)
-    .expectStatus(200)
-    .then(
-      async (data: Folder[]) => {
-        if (data.length) await spec().get(`${HOST}/folders/${data[0].id}`).expectStatus(200);
-      },
-      (err) => {
-        console.log(err);
-      },
-    );
+    .withCookies(process.env.COOKIES_TESTS_NAME || '', process.env.COOKIES_TESTS_VALUE || '')
+    .expectStatus(200)) as Folder[];
+
+  if (folders.length) {
+    await spec().get(`${HOST}/folders/${folders[0].id}`).expectStatus(200);
+  }
 });
 
 test('create, update and delete folder', async () => {
   const folder = (await spec()
     .post(`${HOST}/folders/create`)
-    .withCookies('connect.sid', 's%3A6iEB-F3BJa-WYD-H_vGl4iNoXNBF37Jk.Dwg4NdnYFUA2B78FuGQyejcl%2F31NQgkOiBde2TA6MDk')
+    .withCookies(process.env.COOKIES_TESTS_NAME || '', process.env.COOKIES_TESTS_VALUE || '')
     .withBody({ name: 'test create folder' })
     .expectStatus(302)) as Folder;
   console.log('create folder');
