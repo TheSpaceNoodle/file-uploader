@@ -13,5 +13,6 @@ model File {
     folder   Folder  @relation(fields: [folderId], references: [id])
     folderId String  @db.Uuid
     name     String
+    fileUrl  String  @unique
     size     Decimal
 }
