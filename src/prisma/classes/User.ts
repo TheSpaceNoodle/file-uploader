@@ -1,7 +1,7 @@
 import { User } from '@prisma/client';
-import prisma from '..';
+import prisma from '@/prisma/index.ts';
 import bcrypt from 'bcryptjs';
-import { UserWithFolders } from '../models';
+import { UserWithFolders } from '../models/index.ts';
 
 class Users {
   static findById(id: string): Promise<UserWithFolders | null> {

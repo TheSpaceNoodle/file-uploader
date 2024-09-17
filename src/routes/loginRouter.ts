@@ -1,4 +1,4 @@
-import { getLogin, getLogout, postLogin } from '@/controllers/loginController';
+import { getLogin, getLogout, postLogin } from '@/controllers/loginController.ts';
 import { Router } from 'express';
 
 const router = Router();

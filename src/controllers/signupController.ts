@@ -1,4 +1,4 @@
-import Users from '@/prisma/classes/User';
+import Users from '@/prisma/classes/User.ts';
 import { User } from '@prisma/client';
 import { NextFunction, Request, Response } from 'express';
 import { validationResult } from 'express-validator';

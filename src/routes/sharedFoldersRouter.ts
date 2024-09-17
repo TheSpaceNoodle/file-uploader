@@ -1,5 +1,5 @@
-import { getFileById } from '@/controllers/foldersController';
-import Folders from '@/prisma/classes/Folder';
+import { getFileById } from '@/controllers/foldersController.ts';
+import Folders from '@/prisma/classes/Folder.ts';
 import { Request, Response, Router } from 'express';
 
 const router = Router();

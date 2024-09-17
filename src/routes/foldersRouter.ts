@@ -9,7 +9,7 @@ import {
   getCreateFolder,
   deleteFileById,
   postShareFolder,
-} from '@/controllers/foldersController';
+} from '@/controllers/foldersController.ts';
 import { Router } from 'express';
 
 const router = Router();

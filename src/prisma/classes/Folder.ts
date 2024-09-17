@@ -1,7 +1,7 @@
 import { File, Folder } from '@prisma/client';
-import prisma from '..';
-import FolderWithFiles from '../models/FolderWithFiles';
-import bucket from '../bucket';
+import prisma from '@/prisma/index.ts';
+import FolderWithFiles from '../models/FolderWithFiles.ts';
+import bucket from '../bucket.ts';
 
 class Folders {
   static getUserFolders(userId: string): Promise<Folder[]> {

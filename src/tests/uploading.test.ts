@@ -1,4 +1,4 @@
-import { HOST } from '../constants';
+import { HOST } from '@/constants/index.ts';
 import { spec } from 'pactum';
 import { test } from 'vitest';
 import { Folder } from '@prisma/client';

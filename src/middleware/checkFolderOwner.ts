@@ -1,4 +1,4 @@
-import { UserWithFolders } from '@/prisma/models';
+import { UserWithFolders } from '@/prisma/models/index.ts';
 import { NextFunction, Request, Response } from 'express';
 
 const checkFolderOwner = (req: Request, res: Response, next: NextFunction) => {

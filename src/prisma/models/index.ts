@@ -1,2 +1,2 @@
-export { default as ApiResponse } from './ApiResponse';
-export { default as UserWithFolders } from './UserWithFolders';
+export { default as ApiResponse } from './ApiResponse.ts';
+export { default as UserWithFolders } from './UserWithFolders.ts';

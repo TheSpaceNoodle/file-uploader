@@ -3,10 +3,10 @@ import express, { Application } from 'express';
 import passport from 'passport';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { HOST } from '@/constants';
-import { sessionsMiddleware } from '@/prisma/sessionsMiddleware';
-import { foldersRouter, indexRouter, loginRouter, sharedFoldersRouter, signUpRouter } from '@/routes';
-import { authenticatedRoute } from '@/middleware';
+import { HOST } from '@/constants/index.ts';
+import { sessionsMiddleware } from '@/prisma/sessionsMiddleware.ts';
+import { foldersRouter, indexRouter, loginRouter, sharedFoldersRouter, signUpRouter } from '@/routes/index.ts';
+import { authenticatedRoute } from '@/middleware/index.ts';
 
 import '@/auth/passport';
 import 'dotenv/config';

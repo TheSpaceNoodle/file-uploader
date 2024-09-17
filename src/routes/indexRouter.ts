@@ -1,4 +1,4 @@
-import UserWithFolders from '@/prisma/models/UserWithFolders';
+import UserWithFolders from '@/prisma/models/UserWithFolders.ts';
 import { Request, Response, Router } from 'express';
 
 const router = Router();

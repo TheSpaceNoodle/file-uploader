@@ -1,4 +1,4 @@
-import Users from '@/prisma/classes/User';
+import Users from '@/prisma/classes/User.ts';
 
 export const postSignupValidator = {
   email: {

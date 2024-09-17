@@ -1,6 +1,6 @@
 import expressSession from 'express-session';
 import { PrismaSessionStore } from '@quixo3/prisma-session-store';
-import prisma from '@/prisma';
+import prisma from '@/prisma/index.ts';
 
 export const sessionsMiddleware = expressSession({
   cookie: {

@@ -1,4 +1,4 @@
-import Folders from '@/prisma/classes/Folder';
+import Folders from '@/prisma/classes/Folder.ts';
 import { User } from '@prisma/client';
 import { NextFunction, Request, Response } from 'express';
 

@@ -1,17 +1,21 @@
 {
   "name": "express-ts-basic",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "",
   "main": "src/index.ts",
   "type": "module",
   "scripts": {
     "test": "vitest",
-    "start": "tsx watch src",
+    "dev": "tsx watch src",
+    "start": "node dist/index.mjs",
+    "copy": "cp src/views dist/",
+    "build": "npm run copy && npx pkgroll",
     "migrate": "npx prisma migrate dev --name"
   },
   "prisma": {
     "schema": "src/prisma"
   },
+  "exports": "./dist/index.mjs",
   "author": "",
   "license": "ISC",
   "devDependencies": {
@@ -31,7 +35,7 @@
     "prettier": "3.3.3",
     "prisma": "^5.19.1",
     "tsx": "^4.19.0",
-    "typescript": "^5.5.4",
+    "typescript": "^5.6.2",
     "typescript-eslint": "^8.3.0",
     "vitest": "^2.0.5"
   },

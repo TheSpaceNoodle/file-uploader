@@ -1,7 +1,7 @@
 import { test } from 'vitest';
 import { spec } from 'pactum';
 import { Prisma } from '@prisma/client';
-import { HOST } from '../constants';
+import { HOST } from '@/constants/index.ts';
 
 test('login with wrong credentials', async () => {
   await spec().post(`${HOST}/login`).withBody({ username: 'user', password: 'password' }).expectStatus(401);
