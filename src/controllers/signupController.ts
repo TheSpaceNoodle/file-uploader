@@ -18,7 +18,6 @@ export const postSignup = async (req: Request, res: Response, next: NextFunction
 
       return res.redirect('/login');
     } catch (e) {
-      console.log(e);
       next(e);
     }
   }

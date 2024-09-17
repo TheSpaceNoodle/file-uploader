@@ -3,12 +3,12 @@ import express, { Application } from 'express';
 import passport from 'passport';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { HOST } from './constants';
-import { sessionsMiddleware } from './prisma/sessionsMiddleware';
-import { foldersRouter, indexRouter, loginRouter, signUpRouter } from './routes';
-import authenticatedRoute from './auth/authenticatedRoute';
+import { HOST } from '@/constants';
+import { sessionsMiddleware } from '@/prisma/sessionsMiddleware';
+import { foldersRouter, indexRouter, loginRouter, signUpRouter } from '@/routes';
+import { authenticatedRoute } from '@/middleware';
 
-import '@/auth/passport.ts';
+import '@/auth/passport';
 import 'dotenv/config';
 
 const app: Application = express();

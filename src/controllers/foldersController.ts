@@ -1,7 +1,8 @@
 import Folders from '@/prisma/classes/Folder';
-import { isFolderOwner } from '@/utils';
 import { User } from '@prisma/client';
 import { NextFunction, Request, Response } from 'express';
+
+import multer, { Multer } from 'multer';
 
 export const getUserFolders = async (req: Request, res: Response) => {
   const user = req.user as User;
@@ -16,13 +17,9 @@ export const getCreateFolder = (_: Request, res: Response) => {
 };
 
 export const getFolderById = async (req: Request, res: Response) => {
-  if (isFolderOwner(req)) {
-    const folder = await Folders.getFolderById(req.params.folderId);
+  const folder = await Folders.getFolderById(req.params.folderId);
 
-    return res.render('folder', { folder });
-  }
-
-  return res.status(403);
+  return res.render('folder', { folder });
 };
 
 export const postFolder = async (req: Request, res: Response, next: NextFunction) => {
@@ -38,35 +35,54 @@ export const postFolder = async (req: Request, res: Response, next: NextFunction
 };
 
 export const updateFolder = async (req: Request, res: Response, next: NextFunction) => {
-  if (isFolderOwner(req)) {
-    try {
-      const body = req.body as { name: string };
+  try {
+    const body = req.body as { name: string };
 
-      await Folders.updateFolderName(req.params.folderId, body.name);
+    await Folders.updateFolderName(req.params.folderId, body.name);
 
-      return res.redirect(`/folders/${req.params.folderId}`);
-    } catch (e) {
-      return next(e);
-    }
+    return res.redirect(`/folders/${req.params.folderId}`);
+  } catch (e) {
+    return next(e);
   }
-
-  return res.status(403).redirect('/');
 };
 
 export const postDeleteFolder = async (req: Request, res: Response, next: NextFunction) => {
-  if (isFolderOwner(req)) {
-    try {
-      await Folders.deleteFolder(req.params.id);
+  try {
+    await Folders.deleteFolder(req.params.id);
 
-      res.redirect('/');
-    } catch (e) {
-      next(e);
-    }
+    res.redirect('/');
+  } catch (e) {
+    next(e);
   }
 };
 
-export const postFileToFolder = () => {};
+const upload: Multer = multer({ storage: multer.memoryStorage() });
 
-export const getFileById = () => {};
+export const postFileToFolder = [
+  upload.single('file'),
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      await Folders.uploadFile(req.file, req.params.folderId);
 
-export const deleteFileById = () => {};
+      res.redirect('back');
+    } catch (e) {
+      next(e);
+    }
+  },
+];
+
+export const getFileById = async (req: Request, res: Response, next: NextFunction) => {
+  const fileUrl = await Folders.downloadFile(req.params.fileId);
+
+  if (fileUrl) {
+    res.redirect(fileUrl);
+  }
+
+  res.status(500);
+  next();
+};
+
+export const deleteFileById = async (req: Request, res: Response) => {
+  await Folders.deleteFileById(req.params.fileId);
+  res.redirect('/');
+};

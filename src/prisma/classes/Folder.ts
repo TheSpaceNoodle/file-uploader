@@ -1,6 +1,7 @@
-import { Folder } from '@prisma/client';
+import { File, Folder } from '@prisma/client';
 import prisma from '..';
 import FolderWithFiles from '../models/FolderWithFiles';
+import bucket from '../bucket';
 
 class Folders {
   static getUserFolders(userId: string): Promise<Folder[]> {
@@ -59,6 +60,66 @@ class Folders {
           },
         }),
       );
+  }
+
+  static async uploadFile(file: Express.Multer.File | undefined, folderId: string) {
+    if (!file) {
+      throw new Error('broken file');
+    }
+
+    const { data, error } = await bucket.storage
+      .from('file-uploader')
+      .upload(folderId + file.originalname + new Date().toString(), file.buffer, {});
+
+    if (error) {
+      return console.log('error', error);
+    }
+
+    await prisma.file.create({
+      data: { fileUrl: data.path, size: file.size, name: file.originalname, folderId },
+    });
+  }
+
+  static async downloadFile(fileId: string): Promise<string | null> {
+    const file: File | null = await prisma.file.findUnique({
+      where: {
+        id: fileId,
+      },
+    });
+
+    if (!file) {
+      console.log('problem with file url');
+      return null;
+    }
+
+    const { data } = await bucket.storage.from('file-uploader').createSignedUrl(file.fileUrl, 60);
+
+    if (!data?.signedUrl) {
+      console.log('problem with file');
+      return null;
+    }
+
+    return data.signedUrl;
+  }
+
+  static async deleteFileById(fileId: string) {
+    const file: File | null = await prisma.file.findUnique({
+      where: {
+        id: fileId,
+      },
+    });
+
+    if (!file) {
+      console.log('problem with file url');
+      return null;
+    }
+
+    await bucket.storage.from('file-uploader').remove([file.fileUrl]);
+    await prisma.file.delete({
+      where: {
+        id: fileId,
+      },
+    });
   }
 }
 
