@@ -10,9 +10,13 @@
         <h1>Folder: <%= folder.name %></h1>
         <nav>
             <a href="/">Home</a>
-            <a href="/share/<%= folder.id %>">Share Folder</a>
-            <a href="/folders/<%= folder.id %>/delete">Delete Folder</a>
+            <% if (!folder.isPublic) {%>
+                <button id="shareFolderModalOpen">Share Folder</button>
+            <% } else { %>
+                <a href="/share/<%= folder.id %>" target="_blank" rel="noopener noreferrer">Get share link</a>
+            <% } %>
             <button id="renameFolderBtn">Rename Folder</button>
+            <a href="/folders/<%= folder.id %>/delete">Delete Folder</a>
         </nav>
     </header>
 
@@ -40,24 +44,44 @@
 
     <dialog id="renameFolderModal">
         <div class="modal-content">
-            <span id="modalClose">&times;</span>
+            <span id="renameModalClose">&times;</span>
             <form action="/folders/<%= folder.id %>/update" method="post">
                 <label for="name">New Name:</label>
                 <input type="text" id="name" name="name" required>
                 <button type="submit">Rename</button>
             </form>
         </div>
-    </div>
+    </dialog>
+
+    <dialog id="shareFolderModal">
+        <div class="modal-content">
+            <span id="shareModalClose">&times;</span>
+            <form action="/folders/<%= folder.id %>/share" method="post">
+                <label for="duration">Duration (in days)</label>
+                <input type="number" id="duration" name="duration" required>
+                <button type="submit">Share</button>
+            </form>
+        </div>
+    </dialog>
 
     <script>
-        const modal = document.getElementById('renameFolderModal');
+        const renameModal = document.getElementById('renameFolderModal');
+        const shareModal = document.getElementById('shareFolderModal');
 
         document.getElementById('renameFolderBtn').onclick = function() {
-            modal.showModal()
+            renameModal.showModal()
         };
 
-        document.getElementById('modalClose').onclick = function() {
-            modal.close()
+        document.getElementById('renameModalClose').onclick = function() {
+            renameModal.close()
+        };
+
+        document.getElementById('shareFolderModalOpen').onclick = function() {
+            shareModal.showModal()
+        };
+
+        document.getElementById('shareModalClose').onclick = function() {
+            shareModal.close()
         };
 
         function deleteFile(fileId) {

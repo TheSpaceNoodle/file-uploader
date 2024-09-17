@@ -5,7 +5,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { HOST } from '@/constants';
 import { sessionsMiddleware } from '@/prisma/sessionsMiddleware';
-import { foldersRouter, indexRouter, loginRouter, signUpRouter } from '@/routes';
+import { foldersRouter, indexRouter, loginRouter, sharedFoldersRouter, signUpRouter } from '@/routes';
 import { authenticatedRoute } from '@/middleware';
 
 import '@/auth/passport';
@@ -29,6 +29,7 @@ app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/sign-up', signUpRouter);
 app.use('/folders', authenticatedRoute, foldersRouter);
+app.use('/share', sharedFoldersRouter);
 
 app.listen(process.env.PORT, () => {
   console.log(`Server is running on: ${HOST}`);

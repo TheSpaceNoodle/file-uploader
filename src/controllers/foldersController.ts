@@ -71,6 +71,21 @@ export const postFileToFolder = [
   },
 ];
 
+export const postShareFolder = async (req: Request, _: Response, next: NextFunction) => {
+  const { duration } = req.body as { duration: number };
+
+  if (duration <= 0) {
+    return next();
+  }
+
+  const date = new Date();
+  date.setDate(new Date().getDate() + 10);
+
+  await Folders.shareFolder(req.params.folderId, date);
+
+  next();
+};
+
 export const getFileById = async (req: Request, res: Response, next: NextFunction) => {
   const fileUrl = await Folders.downloadFile(req.params.fileId);
 

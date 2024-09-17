@@ -121,6 +121,30 @@ class Folders {
       },
     });
   }
+
+  static shareFolder(folderId: string, duration: Date) {
+    return prisma.folder.update({
+      where: {
+        id: folderId,
+      },
+      data: {
+        isPublic: true,
+        sharedUntil: duration,
+      },
+    });
+  }
+
+  static unshareFolder(folderId: string) {
+    return prisma.folder.update({
+      where: {
+        id: folderId,
+      },
+      data: {
+        isPublic: false,
+        sharedUntil: null,
+      },
+    });
+  }
 }
 
 export default Folders;

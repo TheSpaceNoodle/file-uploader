@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Uploader - Folder</title>
+</head>
+<body>
+    <header>
+        <h1>Folder: <%= folder.name %></h1>
+        <nav>
+            <a href="/">Home</a>
+                <a href="/share/<%= folder.id %>" target="_blank" rel="noopener noreferrer">Get share link</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="fileList">
+            <h2>Files</h2>
+            <ul>
+                <% folder.File.forEach(function(file) { %>
+                    <li>
+                        <a href="/share/<%= folder.id %>/<%= file.id %>" target="_blank" rel="noopener noreferrer"><%= file.name %></a>
+                    </li>
+                <% }); %>
+            </ul>
+        </section>
+    </main>
+</body>
+</html>
