@@ -1,7 +1,9 @@
-# The most basic Node.js + Express + TS setup.
+# File uploader app (with docker
 
-Only few basic folders, server, eslint, prettier, dotenv, tsx (instead of ts-node & nodemon), ejs and '/' route to check if app is starting.
+Auth, file upload/download/deletion, folders
 
-# How to use
+## How to use
 
-npm i => npm run start => done
+npm i => npm run dev => done
+## OR WITH DOCKER
+docker compose up
