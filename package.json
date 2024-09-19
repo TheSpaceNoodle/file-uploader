@@ -8,8 +8,7 @@
     "test": "vitest",
     "dev": "tsx watch src",
     "start": "node dist/index.mjs",
-    "copy": "cp src/views dist/",
-    "build": "npm run copy && npx pkgroll",
+    "build": "npx pkgroll",
     "migrate": "npx prisma migrate dev --name"
   },
   "prisma": {

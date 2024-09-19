@@ -1,0 +1,11 @@
+services:
+  app:
+    image: node:20-alpine
+    command: sh -c "npm i && npm run build && npm run start"
+    ports:
+      - ${PORT}:${PORT}
+    working_dir: /app
+    volumes:
+      - ./:/app
+    expose:
+      - ${PORT}
